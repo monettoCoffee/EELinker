@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<mapper nameSpace="com.monetto.mapper.Mapper">
+
+    <select id="selectExample" resultType ="app.domain.User">
+        select * from user where account = ${account} and password = ${password}
+    </select>
+
+    <insert id="insertExample" resultType ="app.domain.User">
+        insert into user (account,password,phone,email,numid,head) values(${account},${password},'1','1','1','1');
+    </insert>
+
+</mapper>
