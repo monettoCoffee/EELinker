@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+    <input type="button" value="GetRequestTest" onclick="getTest()">
+    <input type="button" value="PostRequestTest" onclick="postTest()">
+    <script src="https://cdn.bootcss.com/axios/0.18.0/axios.min.js"></script>
+    <script>value
+        function getTest(){
+            axios.get('gettest', {"params":{"name":"nameGetValue", "password":"passwordGetValue"}}).then(
+            function(response){
+                alert(JSON.stringify(response.data));
+            });
+        }
+
+        function postTest(){
+            var params = new URLSearchParams()
+            params.append("name", "namePostValue");
+            params.append("password", "passwordPostValue");
+            axios.post('posttest', params).then(
+            function(response){
+                alert(JSON.stringify(response.data));
+            });
+        }
+    </script>
+
+</body>
+</html>
