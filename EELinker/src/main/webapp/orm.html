@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<div>
+    <span>name:</span><input id="eelName"><br>
+    <span>password:</span><input id="eelPassword">
+</div>
+
+<input type="button" value="SelectOrmTest" onclick="selectTest()">
+<br><input type="button" value="InsertOrmTest" onclick="insertTest()">
+<br><input type="button" value="DeleteOrmTest" onclick="deleteTest()">
+<br><input type="button" value="UpdateOrmTest" onclick="updateTest()">
+<script src="https://cdn.bootcss.com/axios/0.18.0/axios.min.js"></script>
+<script>
+        function selectTest(){
+            var params = new URLSearchParams()
+            params.append("name", document.getElementById("eelName").value);
+            params.append("password", document.getElementById("eelPassword").value);
+            axios.post('select', params).then(
+            function(response){
+                alert(JSON.stringify(response.data));
+            });
+        }
+
+        function insertTest(){
+            var params = new URLSearchParams()
+            params.append("name", document.getElementById("eelName").value);
+            params.append("password", document.getElementById("eelPassword").value);
+            axios.post('insert', params).then(
+            function(response){
+                alert(JSON.stringify(response.data));
+            });
+        }
+
+        function deleteTest(){
+            var params = new URLSearchParams()
+            params.append("name", document.getElementById("eelName").value);
+            params.append("password", document.getElementById("eelPassword").value);
+            axios.post('delete', params).then(
+            function(response){
+                alert(JSON.stringify(response.data));
+            });
+        }
+
+        function updateTest(){
+            var params = new URLSearchParams()
+            params.append("name", document.getElementById("eelName").value);
+            params.append("password", document.getElementById("eelPassword").value);
+            axios.post('update', params).then(
+            function(response){
+                alert(JSON.stringify(response.data));
+            });
+        }
+    </script>
+
+</body>
+</html>
