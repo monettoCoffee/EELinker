@@ -4,6 +4,9 @@ import eel.orm.core.Executor;
 
 import java.sql.Connection;
 
+/**
+ * @author monetto
+ */
 public class SqlSession {
     private SqlSessionFactory sqlSessionFactory;
     private Executor executor;

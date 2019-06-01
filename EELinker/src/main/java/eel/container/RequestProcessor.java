@@ -1,13 +1,13 @@
 package eel.container;
 
-import eel.router.DispatcherServlet;
+import eel.router.BaseRouter;
 import eel.router.MappingReflect;
 
 import java.net.Socket;
 
 public class RequestProcessor {
 
-    private DispatcherServlet dispatcher = new DispatcherServlet();
+    private BaseRouter dispatcher = new BaseRouter();
 
     private ContainerConnector httpConnector;
     private HttpServletRequestImpl httpRequest = null;

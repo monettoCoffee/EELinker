@@ -1,5 +1,8 @@
 package eel.utils;
 
+/**
+ * @author monetto
+ */
 public enum HttpResponseMessage{
     SC_OK("OK",200),SC_NOT_FOUND("File Not Found",404);
 

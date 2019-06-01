@@ -2,6 +2,9 @@ package eel.utils;
 
 import java.util.HashMap;
 
+/**
+ * @author monetto
+ */
 public class ContentTypeFind {
 
     private static String TEXT_HTML = "text/html";

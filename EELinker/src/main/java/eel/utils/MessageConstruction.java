@@ -1,5 +1,8 @@
 package eel.utils;
 
+/**
+ * @author monetto
+ */
 public class MessageConstruction {
     private static final String CRLF = new String("\r\n");
 

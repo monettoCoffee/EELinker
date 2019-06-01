@@ -1,4 +1,4 @@
-package eel.annotation.orm;
+package eel.annotation.router;
 
 import java.lang.annotation.ElementType;
 import java.lang.annotation.Retention;
@@ -8,7 +8,8 @@ import java.lang.annotation.Target;
 /**
  * @author monetto
  */
-@Target(ElementType.TYPE)
+@Target({ElementType.METHOD})
 @Retention(RetentionPolicy.RUNTIME)
-public @interface SqlMapper {
+public @interface DefaultValue {
+    String valueExpression() default "";
 }

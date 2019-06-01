@@ -2,6 +2,9 @@ package eel.container;
 
 import java.io.IOException;
 
+/**
+ * @author monetto
+ */
 public class StaticResourceProcessor {
     public static void staticProcess(HttpServletRequestImpl httpRequest, HttpServletResponseImpl httpResponse) {
         try {

@@ -1,5 +1,8 @@
 package eel.orm.core;
 
+/**
+ * @author monetto
+ */
 public class BatisConfig {
 
     public static String jdbcDriver;

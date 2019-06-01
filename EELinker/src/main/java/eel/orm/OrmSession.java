@@ -5,16 +5,19 @@ import eel.orm.sqlSession.SqlSessionFactory;
 import eel.orm.sqlSession.SqlSessionFactoryBuilder;
 
 import java.lang.ref.WeakReference;
+import java.util.Objects;
 
+/**
+ * @author monetto
+ */
 public class OrmSession {
+
 
     private static SqlSessionFactory sqlSessionFactory;
 
     private synchronized static void createSqlSessionFactory(){
-        if (OrmSession.sqlSessionFactory == null){
-            WeakReference<SqlSessionFactoryBuilder> reference = new WeakReference<SqlSessionFactoryBuilder>(new SqlSessionFactoryBuilder());
-            OrmSession.sqlSessionFactory = reference.get().build("mapper");
-        }
+        WeakReference<SqlSessionFactoryBuilder> reference = new WeakReference<SqlSessionFactoryBuilder>(new SqlSessionFactoryBuilder());
+        OrmSession.sqlSessionFactory = Objects.requireNonNull(reference.get()).build("mapper");
     }
 
     private static SqlSession getSqlSession(){

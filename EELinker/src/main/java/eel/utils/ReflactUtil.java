@@ -5,6 +5,9 @@ import java.lang.reflect.Method;
 import java.util.HashMap;
 import java.util.Map;
 
+/**
+ * @author monetto
+ */
 public class ReflactUtil {
 
     public static Map<String, String> getFieldAndValue(Object object) {

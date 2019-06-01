@@ -2,6 +2,9 @@ package eel.utils;
 
 import java.security.MessageDigest;
 
+/**
+ * @author monetto
+ */
 public class MD5 {
 
     public static boolean compare(String str,String md5str) {

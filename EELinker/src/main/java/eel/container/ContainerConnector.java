@@ -1,6 +1,7 @@
 package eel.container;
 
-import eel.config.ContainerConfig;
+import eel.config.DefaultContainerConfig;
+import eel.scanner.BeanMapping;
 import eel.thread.AsyncThread;
 import eel.utils.ContentTypeFind;
 
@@ -11,6 +12,9 @@ import java.net.ServerSocket;
 import java.net.Socket;
 import java.net.URL;
 
+/**
+ * @author monetto
+ */
 public class ContainerConnector implements Runnable {
 
     private volatile boolean stopped;
@@ -21,6 +25,7 @@ public class ContainerConnector implements Runnable {
         this.start();
     }
 
+    // Plan Done Version 0.2.0
     public ContainerConnector(String configPackage){
         if (configPackage == null){
             // todo 包为null, 采用默认配置
@@ -46,9 +51,12 @@ public class ContainerConnector implements Runnable {
 //        this.start();
     }
 
+    @Override
     public void run() {
+        // 初始化Bean容器
+//        BeanMapping.
         ServerSocket serverSocket = null;
-        int port = ContainerConfig.listenPort;
+        int port = DefaultContainerConfig.listenPort;
         try {
             serverSocket =  new ServerSocket(port, 1, InetAddress.getByName("127.0.0.1"));
         } catch (IOException e) {
@@ -56,7 +64,7 @@ public class ContainerConnector implements Runnable {
             System.exit(1);
         }
 
-        System.out.println("Server Logger : Version " + ContainerConfig.version + " Listening Port " + ContainerConfig.listenPort);
+        System.out.println("Server Logger : Version " + DefaultContainerConfig.version + " Listening Port " + DefaultContainerConfig.listenPort);
 
         while (!stopped) {
             Socket socket = null;

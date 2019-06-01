@@ -1,20 +1,25 @@
 package app.router;
 
 import app.entry.SampleEntry;
+import eel.annotation.router.DefaultValue;
 import eel.annotation.router.Handler;
 import eel.annotation.router.ResponseData;
 import eel.annotation.router.Router;
 import eel.orm.OrmSession;
 
+/**
+ * @author monetto
+ */
 @Handler
 public class SampleRouter {
 
-    @Router(value = "/index", method = "GET")
+    @Router(value = "/index")
     public String index(){
         return "index";
     }
 
     @ResponseData
+    @DefaultValue(valueExpression = "namemonetto;password=")
     @Router(value = "/gettest", method = "GET")
     public String getTest(String name, String password){
         System.out.println(name);
@@ -50,10 +55,8 @@ public class SampleRouter {
         s1.setName(name);
         s1.setPassword(password);
         OrmSession.doSql("sampleInsert", s1);
-        // Type 2:
-        // OrmSession.insert("sampleInsert", s1);
-        // Type 3:
-        // OrmSession.doSql("type_insert", s1, "Other_Such_As_Type1");
+        /** Type 2: OrmSession.insert("sampleInsert", s1);
+            Type 3: OrmSession.doSql("sampleInsert", s1, "sqlType");*/
         return "Operate Done";
     }
 
@@ -64,10 +67,8 @@ public class SampleRouter {
         s1.setName(name);
         s1.setPassword(password);
         OrmSession.doSql("sampleDelete", s1);
-        // Type 2:
-        // OrmSession.delete("sampleDelete", s1);
-        // Type 3:
-        // OrmSession.doSql("type_delete", s1, "Just_As_Mark");
+        /** Type 2: OrmSession.delete("sampleDelete", s1);
+            Type 3: OrmSession.doSql("sampleDelete", s1, "sqlType");*/
         return "Operate Done";
     }
 
@@ -78,10 +79,8 @@ public class SampleRouter {
         s1.setName(name);
         s1.setPassword(password);
         OrmSession.doSql("sampleUpdate", s1);
-        // Type 2:
-        // OrmSession.update("sampleUpdate", s1);
-        // Type 3:
-        // OrmSession.doSql("type_update", s1);
+        /** Type 2: OrmSession.update("sampleUpdate", s1);
+            Type 3: OrmSession.doSql("type_update", s1, "sqlType);*/
         return "Operate Done";
     }
 

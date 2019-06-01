@@ -1,5 +1,8 @@
 package eel.orm.entry;
 
+/**
+ * @author monetto
+ */
 public class Function {
     private String sql;
     private String resultType;

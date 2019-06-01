@@ -4,6 +4,9 @@ import eel.utils.ReflactUtil;
 
 import java.lang.reflect.Method;
 
+/**
+ * @author monetto
+ */
 public class AsyncThread{
 
     public static void run(Object object, String methodName, Object...args) throws Exception{

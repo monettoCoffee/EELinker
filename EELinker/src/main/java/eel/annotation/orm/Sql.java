@@ -8,7 +8,9 @@ import java.lang.annotation.Target;
 /**
  * @author monetto
  */
-@Target(ElementType.TYPE)
+@Target(ElementType.FIELD)
 @Retention(RetentionPolicy.RUNTIME)
-public @interface SqlMapper {
+public @interface Sql {
+    String sql() default "";
+    String type() default "Undefined";
 }

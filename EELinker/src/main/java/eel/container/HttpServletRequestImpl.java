@@ -7,6 +7,9 @@ import java.net.Socket;
 import java.net.URLDecoder;
 import java.util.*;
 
+/**
+ * @author monetto
+ */
 public class HttpServletRequestImpl {
 
     private Map<String, String[]> requestParam = new HashMap<>();

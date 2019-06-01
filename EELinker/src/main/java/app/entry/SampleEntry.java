@@ -1,5 +1,8 @@
 package app.entry;
 
+/**
+ * @author monetto
+ */
 public class SampleEntry {
 
     private String name;

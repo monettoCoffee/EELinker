@@ -19,6 +19,9 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Iterator;
 
+/**
+ * @author monetto
+ */
 public class SqlSessionFactory {
 
     private static SqlSessionFactory instance;
@@ -27,10 +30,8 @@ public class SqlSessionFactory {
     public ArrayList<SqlSession> connections;
 
     public void build(String packagePath){
-        if(this.loader == null){
-            this.loader = ClassLoader.getSystemClassLoader();
-        }
-        this.mapperPath = ClassLoader.getSystemResource("").getPath()+packagePath.replace(".", "/");
+        this.loader = ClassLoader.getSystemClassLoader();
+        this.mapperPath = ClassLoader.getSystemResource("").getPath()+packagePath.replace(".", File.separator);
     }
 
     public Executor getExecutor(SqlSession sqlSession){
@@ -63,6 +64,7 @@ public class SqlSessionFactory {
             } else {
                 System.out.println("ORM Logger : Unknown Property Value");
             }
+            // todo 扫包扫描注解式SQL
         }
 
         File file = new File(mapperPath);
@@ -93,7 +95,10 @@ public class SqlSessionFactory {
         }
     }
 
-    private SqlSessionFactory(){}
+    private SqlSessionFactory(){
+
+    }
+
     public static SqlSessionFactory getInstance(){
         if(instance == null) {
             return createInstance();

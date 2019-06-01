@@ -1,4 +1,4 @@
-EELinkder 
+EELinkder Version Document
 
 更新内容文档
 0.1.0: 20190419
@@ -13,7 +13,6 @@ EELinkder
         修复SQL语句本身具有转义符号而引起的异常问题。
         Mapper标签忽略大小写。
         Mapper支持自定义标签。
-        增强代码稳定性。
         
         Add sameple:
             Select/Insert/Delete/Update
@@ -21,4 +20,11 @@ EELinkder
         Fix bug: special orm character cause exception.
         Mapper label ignore case.
         Mapper supports custom label.
-        Improved code stability.
+        
+
+0.1.2: Waitting...
+    Plan:
+        支持通过注解添加SQL Mapper。
+        支持Router参数默认值，参数默认值本身为等号的逻辑暂未处理。
+        Dispatcher不要用SimpleName。
+        ORM在进行连接时密码不对时的提醒。

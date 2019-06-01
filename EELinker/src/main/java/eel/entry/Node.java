@@ -2,6 +2,9 @@ package eel.entry;
 
 import java.util.Map;
 
+/**
+ * @author monetto
+ */
 public class Node<K, V> implements Map.Entry{
 
     private K key;
