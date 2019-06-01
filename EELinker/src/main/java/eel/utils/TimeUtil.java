@@ -1,22 +1,22 @@
 package eel.utils;
 
-public class TimeUtil {
+public class CountTimeUtil {
 
     public static long martStartTime;
     public static long martEndTime;
 
     public static void startTiming(){
-        TimeUtil.martStartTime = System.currentTimeMillis();
+        CountTimeUtil.martStartTime = System.currentTimeMillis();
     }
 
     public static long endTiming(){
-        TimeUtil.martEndTime = System.currentTimeMillis();
-        return TimeUtil.martEndTime - TimeUtil.martStartTime;
+        CountTimeUtil.martEndTime = System.currentTimeMillis();
+        return CountTimeUtil.martEndTime - CountTimeUtil.martStartTime;
     }
 
     public static void endTimingAndPrint(){
-        TimeUtil.martEndTime = System.currentTimeMillis();
-        Long timing = TimeUtil.martEndTime - TimeUtil.martStartTime;
+        CountTimeUtil.martEndTime = System.currentTimeMillis();
+        Long timing = CountTimeUtil.martEndTime - CountTimeUtil.martStartTime;
         System.out.println("Timing: " + timing.toString());
     }
 
