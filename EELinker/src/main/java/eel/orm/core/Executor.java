@@ -88,19 +88,19 @@ public class Executor {
 
                 Object resultObject;
                 int allValueNum = resultSetMetaData.getColumnCount();
-                for(int index = 1 ;index <= allValueNum ;){
-                    String s = resultSetMetaData.getColumnName(index++);
-                    if ("String".equals(resultType)){
-                        resultObject = resultSet.getString(s);
-                        list.add(resultObject);
-                    } else {
-                        resultObject = Class.forName(resultType).newInstance();
+                if ("String".equals(resultType)) {
+                    resultObject = resultSet.getString(1);
+                    list.add(resultObject);
+                } else {
+                    resultObject = Class.forName(resultType).newInstance();
+                    for(int index = 1 ;index <= allValueNum ;){
+                        String s = resultSetMetaData.getColumnName(index++);
                         Class clazz = ((T)resultObject).getClass();
                         Field nameField = clazz.getDeclaredField(s);
                         nameField.setAccessible(true);
                         nameField.set(resultObject, resultSet.getString(s));
-                        list.add(resultObject);
                     }
+                    list.add(resultObject);
                 }
             }
 
@@ -172,18 +172,18 @@ public class Executor {
     }
 
     private void checkSpecialSqlParameterCharater(StringBuffer sql,
-                                                 String sqlParameterValue,
-                                                 int parameterLeftEdge,
-                                                 List originCharacterList) {
+                                                  String sqlParameterValue,
+                                                  int parameterLeftEdge,
+                                                  List originCharacterList) {
         saveSqlOriginalCharacter(sql, sqlParameterValue, parameterLeftEdge, originCharacterList, '$');
         saveSqlOriginalCharacter(sql, sqlParameterValue, parameterLeftEdge, originCharacterList, '{');
         saveSqlOriginalCharacter(sql, sqlParameterValue, parameterLeftEdge, originCharacterList, '}');
     }
 
     private void saveSqlOriginalCharacter(StringBuffer sql,
-                                         String _sqlParameterValue,
-                                         int parameterLeftEdge,
-                                         List<Node<Integer, Character>> originCharacterList, char replacement) {
+                                          String _sqlParameterValue,
+                                          int parameterLeftEdge,
+                                          List<Node<Integer, Character>> originCharacterList, char replacement) {
         int index;
         StringBuffer sqlParameterValue = new StringBuffer(_sqlParameterValue);
         while ( (index = sqlParameterValue.indexOf("" + replacement)) != -1) {
