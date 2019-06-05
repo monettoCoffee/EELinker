@@ -22,3 +22,9 @@ EELinkder
         Mapper label ignore case.
         Mapper supports custom label.
         Improved code stability.
+        
+0.1.1_fix1: 20190605
+    ORM:
+        修复了SELECT多个字段时按字段实例化对象的问题。
+        
+        Fix bug: select multiple columns pack result by object excessive quantity.
