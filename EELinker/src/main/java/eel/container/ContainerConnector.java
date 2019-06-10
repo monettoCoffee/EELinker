@@ -1,6 +1,7 @@
 package eel.container;
 
 import eel.config.DefaultContainerConfig;
+import eel.scanner.BeanMapping;
 import eel.thread.AsyncThread;
 import eel.utils.ContentTypeFind;
 
@@ -48,6 +49,8 @@ public class ContainerConnector implements Runnable {
     }
 
     public void run() {
+        // 初始化Bean容器
+        BeanMapping.
         ServerSocket serverSocket = null;
         int port = DefaultContainerConfig.listenPort;
         try {

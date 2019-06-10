@@ -155,7 +155,7 @@ public class DispatcherServlet{
                     }
                     //mappingURL和其对应的方法。
                     MappingReflect.controllers.put(url, clazz.newInstance());
-                    //记录哪个Controller能导向那个URL。
+                    //记录哪个Router能导向那个URL。
                 }
             }
         }
