@@ -1,6 +1,7 @@
 package eel.router;
 
 import app.GlobalConfig;
+import eel.annotation.router.DefaultValue;
 import eel.container.HttpServletRequestImpl;
 import eel.container.HttpServletResponseImpl;
 import eel.container.StaticResourceProcessor;
@@ -9,6 +10,7 @@ import eel.annotation.router.ResponseData;
 import eel.annotation.router.Router;
 import eel.utils.Utils;
 
+import java.beans.Expression;
 import java.io.*;
 import java.lang.reflect.Method;
 import java.lang.reflect.Parameter;
@@ -21,27 +23,17 @@ public class DispatcherServlet{
     private String suffix;
 
     public void service(HttpServletRequestImpl request, HttpServletResponseImpl response){
-        if ("POST".equals(request.getMethod())){
-            this.doPost(request, response);
+        String requestMethodType = request.getMethod();
+        Map handlerMappings = MappingReflect.handlerMappingMap.get(requestMethodType);
+        if (handlerMappings == null) {
+            System.out.println("我靠也没有这种方法啊");
         } else {
-            this.doGet(request, response);
-        }
-    }
-
-    public void doGet(HttpServletRequestImpl request, HttpServletResponseImpl response){
-        try {
-            doDispatcher(request, response, MappingReflect.getHandlerMapping);
-        } catch (Exception e) {
-            System.out.println("Router Logger : Servcer Occur 500 Exception");
-            this.responseDataResolver("This Is 500 Page, Please Check Your Service", response);
-        }
-    }
-
-    public void doPost(HttpServletRequestImpl request, HttpServletResponseImpl response){
-        try {
-            doDispatcher(request,response, MappingReflect.postHandlerMapping);
-        } catch (Exception e) {
-            System.out.println("Router Logger : Servcer Occur 500 Exception");
+            try {
+                doDispatcher(request, response, handlerMappings);
+            } catch (Exception e) {
+                System.out.println("Router Logger : Servcer Occur 500 Exception");
+                this.responseDataResolver("This Is 500 Page, Please Check Your Service", response);
+            }
         }
     }
 
@@ -144,18 +136,39 @@ public class DispatcherServlet{
             Method[] methods = clazz.getMethods();
             //其次扫描这个类中的方法,如果方法标有RequestMapping,则结合父url作为mapping。
             for (Method method : methods) {
-                if(method.isAnnotationPresent(Router.class)){
+                if (method.isAnnotationPresent(Router.class)){
                     String url = method.getAnnotation(Router.class).value();
                     String requestMethod = method.getAnnotation(Router.class).method();
                     url = (baseUrl+"/"+url).replaceAll("/+", "/");
-                    if ("POST".equals(requestMethod)){
-                        MappingReflect.postHandlerMapping.put(url, method);
+                    Map handlerMappings = MappingReflect.handlerMappingMap.get(requestMethod);
+                    if (handlerMappings == null) {
+                        System.out.println("这里找不到这个方法!!!");
+                        continue;
                     } else {
-                        MappingReflect.getHandlerMapping.put(url, method);
+                        handlerMappings.put(url, method);
                     }
+
                     //mappingURL和其对应的方法。
                     MappingReflect.controllers.put(url, clazz.newInstance());
                     //记录哪个Router能导向那个URL。
+                }
+                if (method.isAnnotationPresent(DefaultValue.class)) {
+                    String valueExpression = method.getAnnotation(DefaultValue.class).valueExpression();
+                    if (valueExpression == null) {
+                        continue;
+                    }
+                    String []allMethodDefaultParameterAndValue = valueExpression.split(";");
+                    for (String parameterAndValueExpression : allMethodDefaultParameterAndValue) {
+                        int edge = parameterAndValueExpression.indexOf("=");
+                        if (edge == -1) {
+                            System.out.println("Router Logger : Default Value Expression Error : " + clazz.getSimpleName() + "." + method.getName() + " - " + parameterAndValueExpression);
+                            continue;
+                        }
+                        // 如果表达式本身含有等号就不好玩了。
+                        String parameterName = parameterAndValueExpression.substring(0, edge);
+                        String parameterValue = parameterAndValueExpression.substring(edge + 1);
+//                        Map
+                    }
                 }
             }
         }

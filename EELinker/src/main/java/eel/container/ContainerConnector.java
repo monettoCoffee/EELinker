@@ -50,7 +50,7 @@ public class ContainerConnector implements Runnable {
 
     public void run() {
         // 初始化Bean容器
-        BeanMapping.
+//        BeanMapping.
         ServerSocket serverSocket = null;
         int port = DefaultContainerConfig.listenPort;
         try {
