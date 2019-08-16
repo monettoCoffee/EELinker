@@ -26,7 +26,7 @@ public class DispatcherServlet{
         String requestMethodType = request.getMethod();
         Map handlerMappings = MappingReflect.handlerMappingMap.get(requestMethodType);
         if (handlerMappings == null) {
-            System.out.println("我靠也没有这种方法啊");
+            System.out.println("Router Logger : Unsupport Request Method : " + requestMethodType);
         } else {
             try {
                 doDispatcher(request, response, handlerMappings);
@@ -122,53 +122,57 @@ public class DispatcherServlet{
             }
         }
     }
+
     private void initialHandlerMapping() throws IllegalAccessException, InstantiationException {
         for(Map.Entry<String,Object> entry : MappingReflect.beanFactory.entrySet()){
             Class<?> clazz = (Class<?>) entry.getValue();
             String baseUrl = "";
-            if(clazz.isAnnotationPresent(Handler.class)){
-                if(clazz.isAnnotationPresent(Router.class)){
-                    //如果类含有RequestMapping注解,则其值作为父URL提取。
-                    Router annotation = clazz.getAnnotation(Router.class);
-                    baseUrl=annotation.value();
-                }
+            if(! clazz.isAnnotationPresent(Handler.class)){
+                continue;
+            }
+            if(clazz.isAnnotationPresent(Router.class)){
+                //如果类含有RequestMapping注解,则其值作为父URL提取。
+                Router annotation = clazz.getAnnotation(Router.class);
+                baseUrl=annotation.value();
             }
             Method[] methods = clazz.getMethods();
             //其次扫描这个类中的方法,如果方法标有RequestMapping,则结合父url作为mapping。
             for (Method method : methods) {
-                if (method.isAnnotationPresent(Router.class)){
-                    String url = method.getAnnotation(Router.class).value();
-                    String requestMethod = method.getAnnotation(Router.class).method();
-                    url = (baseUrl+"/"+url).replaceAll("/+", "/");
-                    Map handlerMappings = MappingReflect.handlerMappingMap.get(requestMethod);
-                    if (handlerMappings == null) {
-                        System.out.println("这里找不到这个方法!!!");
-                        continue;
-                    } else {
-                        handlerMappings.put(url, method);
-                    }
-
-                    //mappingURL和其对应的方法。
-                    MappingReflect.controllers.put(url, clazz.newInstance());
-                    //记录哪个Router能导向那个URL。
+                if (! method.isAnnotationPresent(Router.class)) {
+                    continue;
                 }
-                if (method.isAnnotationPresent(DefaultValue.class)) {
-                    String valueExpression = method.getAnnotation(DefaultValue.class).valueExpression();
-                    if (valueExpression == null) {
+                String url = method.getAnnotation(Router.class).value();
+                String requestMethod = method.getAnnotation(Router.class).method();
+                url = (baseUrl+"/"+url).replaceAll("/+", "/");
+                Map handlerMappings = MappingReflect.handlerMappingMap.get(requestMethod);
+                if (handlerMappings == null) {
+                    System.out.println("这里找不到这个方法!!!");
+                    continue;
+                } else {
+                    handlerMappings.put(url, method);
+                }
+
+                //mappingURL和其对应的方法。
+                MappingReflect.controllers.put(url, clazz.newInstance());
+                //记录哪个Router能导向那个URL。
+
+                if (! method.isAnnotationPresent(DefaultValue.class)) {
+                    continue;
+                }
+                String valueExpression = method.getAnnotation(DefaultValue.class).valueExpression();
+                if (valueExpression == null) {
+                    continue;
+                }
+                String []allMethodDefaultParameterAndValue = valueExpression.split(";");
+                for (String parameterAndValueExpression : allMethodDefaultParameterAndValue) {
+                    int edge = parameterAndValueExpression.indexOf("=");
+                    if (edge == -1) {
+                        System.out.println("Router Logger : Default Value Expression Error : " + clazz.getSimpleName() + "." + method.getName() + " - " + parameterAndValueExpression);
                         continue;
                     }
-                    String []allMethodDefaultParameterAndValue = valueExpression.split(";");
-                    for (String parameterAndValueExpression : allMethodDefaultParameterAndValue) {
-                        int edge = parameterAndValueExpression.indexOf("=");
-                        if (edge == -1) {
-                            System.out.println("Router Logger : Default Value Expression Error : " + clazz.getSimpleName() + "." + method.getName() + " - " + parameterAndValueExpression);
-                            continue;
-                        }
-                        // 如果表达式本身含有等号就不好玩了。
-                        String parameterName = parameterAndValueExpression.substring(0, edge);
-                        String parameterValue = parameterAndValueExpression.substring(edge + 1);
-//                        Map
-                    }
+                    // 如果表达式本身含有等号就不好玩了。
+                    String parameterName = parameterAndValueExpression.substring(0, edge);
+                    String parameterValue = parameterAndValueExpression.substring(edge + 1);
                 }
             }
         }
