@@ -11,10 +11,8 @@ public class OrmSession {
     private static SqlSessionFactory sqlSessionFactory;
 
     private synchronized static void createSqlSessionFactory(){
-        if (OrmSession.sqlSessionFactory == null){
-            WeakReference<SqlSessionFactoryBuilder> reference = new WeakReference<SqlSessionFactoryBuilder>(new SqlSessionFactoryBuilder());
-            OrmSession.sqlSessionFactory = reference.get().build("mapper");
-        }
+        WeakReference<SqlSessionFactoryBuilder> reference = new WeakReference<SqlSessionFactoryBuilder>(new SqlSessionFactoryBuilder());
+        OrmSession.sqlSessionFactory = reference.get().build("mapper");
     }
 
     private static SqlSession getSqlSession(){

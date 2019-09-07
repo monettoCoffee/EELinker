@@ -25,12 +25,16 @@ public class MapperReflact {
         switch (sqlType) {
             case "select":
                 selectSqlMap.put(sqlId, function);
+                break;
             case "insert":
                 insertSqlMap.put(sqlId, function);
+                break;
             case "update":
                 updateSqlMap.put(sqlId, function);
+                break;
             case "delete":
                 deleteSqlMap.put(sqlId, function);
+                break;
             default:
                 undefinedSqlMap.put(sqlId, function);
         }
@@ -41,9 +45,8 @@ public class MapperReflact {
     public static void checkSqlMapper(String sqlId) {
         if (sameNameChecker.contains(sqlId)) {
             System.out.println("ORM Logger : Same mapper " + sqlId + ", It could overwrite the original mapper");
-        } else {
-            sameNameChecker.add(sqlId);
         }
+        sameNameChecker.add(sqlId);
     }
 
     public static Function getSelectSql(String sqlId){
@@ -85,15 +88,15 @@ public class MapperReflact {
         }
         switch (sqlType) {
             case "select":
-                return selectSqlMap.get(sqlId);
+                return getSelectSql(sqlId);
             case "insert":
-                return selectSqlMap.get(sqlId);
+                return getInsertSql(sqlId);
             case "update":
-                return selectSqlMap.get(sqlId);
+                return getUpdateSql(sqlId);
             case "delete":
-                return selectSqlMap.get(sqlId);
+                return getDeleteSql(sqlId);
             default:
-                return undefinedSqlMap.get(sqlId);
+                return getUndefindedSql(sqlId);
         }
     }
 

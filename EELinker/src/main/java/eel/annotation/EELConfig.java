@@ -5,7 +5,7 @@ import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
 
-public @interface TelvresConfig {
+public @interface EELConfig {
 
     @Target(ElementType.TYPE)
     @Retention(RetentionPolicy.RUNTIME)

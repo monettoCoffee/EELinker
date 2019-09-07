@@ -1,6 +1,7 @@
 package app.router;
 
 import app.entry.SampleEntry;
+import eel.annotation.router.DefaultValue;
 import eel.annotation.router.Handler;
 import eel.annotation.router.ResponseData;
 import eel.annotation.router.Router;
@@ -15,6 +16,7 @@ public class SampleRouter {
     }
 
     @ResponseData
+    @DefaultValue(valueExpression = "namemonetto;password=")
     @Router(value = "/gettest", method = "GET")
     public String getTest(String name, String password){
         System.out.println(name);

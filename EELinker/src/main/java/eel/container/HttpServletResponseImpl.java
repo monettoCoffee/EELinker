@@ -1,7 +1,7 @@
 package eel.container;
 
 
-import eel.config.ContainerConfig;
+import eel.config.DefaultContainerConfig;
 import eel.utils.ContentTypeFind;
 import eel.utils.HttpResponseMessage;
 import eel.utils.MessageConstruction;
@@ -59,7 +59,7 @@ public class HttpServletResponseImpl {
     public void returnPage(String pageName) throws IOException {
         byte[] bytes = new byte[BUFFER_SIZE];
         FileInputStream fis = null;
-        File file = new File(ContainerConfig.webRootDir, pageName);
+        File file = new File(DefaultContainerConfig.webRootDir, pageName);
 
         try {
             fis = new FileInputStream(file);
