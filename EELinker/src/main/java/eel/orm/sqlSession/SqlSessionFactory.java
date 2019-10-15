@@ -2,7 +2,7 @@ package eel.orm.sqlSession;
 
 import eel.orm.core.BatisConfig;
 import eel.orm.core.Executor;
-import eel.orm.core.MapperReflact;
+import eel.orm.core.MapperReflect;
 import eel.orm.entry.Function;
 import eel.utils.Utils;
 import org.dom4j.DocumentException;
@@ -91,7 +91,7 @@ public class SqlSessionFactory {
                 function.setResultType(resultType.trim());
             }
             function.setSql(element.getText().trim());
-            MapperReflact.setSql(element.attributeValue("id").trim(), function, sqlType);
+            MapperReflect.setSql(element.attributeValue("id").trim(), function, sqlType);
         }
     }
 

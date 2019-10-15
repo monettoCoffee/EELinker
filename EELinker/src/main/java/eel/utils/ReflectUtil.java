@@ -8,7 +8,7 @@ import java.util.Map;
 /**
  * @author monetto
  */
-public class ReflactUtil {
+public class ReflectUtil {
 
     public static Map<String, String> getFieldAndValue(Object object) {
         Map<String, String> map = new HashMap<String, String>();
@@ -57,7 +57,7 @@ public class ReflactUtil {
     }
 
     public static Object runMethodByName(Object object, String methodName, Object...args) throws Exception {
-        Method method = ReflactUtil.getMethod(object, methodName,args);
+        Method method = ReflectUtil.getMethod(object, methodName,args);
         return method.invoke(object, args);
     }
 

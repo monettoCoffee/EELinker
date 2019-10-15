@@ -1,6 +1,6 @@
 package eel.thread;
 
-import eel.utils.ReflactUtil;
+import eel.utils.ReflectUtil;
 
 import java.lang.reflect.Method;
 
@@ -14,7 +14,7 @@ public class AsyncThread{
     }
 
     public static void run(Object object, String methodName, Boolean join, Object...args) throws Exception{
-        Method method = ReflactUtil.getMethod(object, methodName, args);
+        Method method = ReflectUtil.getMethod(object, methodName, args);
         if (join){
             method.invoke(object, args);
         } else {

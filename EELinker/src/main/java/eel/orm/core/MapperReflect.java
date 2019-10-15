@@ -8,7 +8,7 @@ import java.util.HashSet;
 /**
  * @author monetto
  */
-public class MapperReflact {
+public class MapperReflect {
 
     // Select SQL
     private static HashMap<String, Function> selectSqlMap = new HashMap<>();

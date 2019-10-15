@@ -3,7 +3,7 @@ package eel.orm.core;
 import eel.entry.Node;
 import eel.orm.entry.Function;
 import eel.orm.sqlSession.SqlSession;
-import eel.utils.ReflactUtil;
+import eel.utils.ReflectUtil;
 
 import java.lang.reflect.Field;
 import java.sql.Connection;
@@ -24,7 +24,7 @@ public class Executor {
     }
 
     public <T> T selectOne(String id, Object parameter, Connection connection){
-        Function function = MapperReflact.getSelectSql(id);
+        Function function = MapperReflect.getSelectSql(id);
         if (function == null){
             System.out.println("ORM Logger : Unknown Mapper "+ id);
             return null;
@@ -32,7 +32,7 @@ public class Executor {
         String resultType = function.getResultType();
         try {
             String sql = function.getSql();
-            Map<String, String> parameterMap = ReflactUtil.getFieldAndValue(parameter);
+            Map<String, String> parameterMap = ReflectUtil.getFieldAndValue(parameter);
             sql = fillParameter(sql, parameterMap);
             PreparedStatement preparedStatement = connection.prepareStatement(sql);
             ResultSet resultSet = preparedStatement.executeQuery();
@@ -66,7 +66,7 @@ public class Executor {
     }
 
     public <T> T selectList(String id,Object parameter,Connection connection){
-        Function function = MapperReflact.getSelectSql(id);
+        Function function = MapperReflect.getSelectSql(id);
         if (function == null){
             System.out.println("ORM Logger : Unknown Mapper "+ id);
             this.sqlSessionProxy.setUseFalse();
@@ -77,7 +77,7 @@ public class Executor {
         try {
             String sql = function.getSql();
             Boolean hasResult;
-            Map<String, String> parameterMap = ReflactUtil.getFieldAndValue(parameter);
+            Map<String, String> parameterMap = ReflectUtil.getFieldAndValue(parameter);
             sql = fillParameter(sql, parameterMap);
             PreparedStatement preparedStatement = connection.prepareStatement(sql);
             ResultSet resultSet = preparedStatement.executeQuery();
@@ -121,14 +121,14 @@ public class Executor {
     }
 
     public void doSql(String id,Object parameter,Connection connection, String type){
-        Function function = MapperReflact.getSql(id, type);
+        Function function = MapperReflect.getSql(id, type);
         if (function == null){
             System.out.println("ORM Logger : Unknown Mapper "+ id);
             return ;
         }
         try {
             String sql = function.getSql();
-            Map<String, String> parameterMap = ReflactUtil.getFieldAndValue(parameter);
+            Map<String, String> parameterMap = ReflectUtil.getFieldAndValue(parameter);
             sql = fillParameter(sql, parameterMap);
             PreparedStatement preparedStatement = connection.prepareStatement(sql);
             preparedStatement.execute();
@@ -158,7 +158,7 @@ public class Executor {
                     System.out.println("ORM Logger : Unknown SQL Mapper Value " + sqlParameterValue);
                 }
                 sqlParameterValue = "\"" + sqlParameterValue + "\"";
-                // replace value from Param Object Reflact Map
+                // replace value from Param Object Reflect Map
                 sql = sql.replace(parameterLeftEdge, parameterRightEdge+1, sqlParameterValue);
                 checkSpecialSqlParameterCharater(sql, sqlParameterValue, parameterLeftEdge, originCharacterList);
             } else {
